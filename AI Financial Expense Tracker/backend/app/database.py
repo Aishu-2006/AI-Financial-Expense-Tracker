@@ -43,6 +43,12 @@ async def ensure_indexes() -> None:
     await database.regret_predictions.create_indexes(
         [IndexModel([("userId", ASCENDING), ("createdAt", ASCENDING)], name="regret_user_created")]
     )
+    await database.community_stats.create_indexes(
+        [
+            IndexModel([("city", ASCENDING), ("incomeRange", ASCENDING)], name="community_city_income_range"),
+            IndexModel([("city", ASCENDING)], name="community_city_lookup"),
+        ]
+    )
 
 
 async def close_database_connection() -> None:

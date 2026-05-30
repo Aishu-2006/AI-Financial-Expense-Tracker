@@ -88,3 +88,32 @@ class RegretPredictionCreate(BaseModel):
     price: float = Field(gt=0)
     riskScore: int = Field(ge=0, le=100)
     message: str = Field(min_length=2, max_length=500)
+
+
+class CommunityStatsCreate(BaseModel):
+    city: str = Field(min_length=2, max_length=80)
+    incomeRange: str = Field(min_length=2, max_length=50)
+    averageSavings: float = Field(ge=0)
+    userSavings: float = Field(ge=0)
+    percentile: float = Field(ge=0, le=100)
+
+
+class FinancialStoryCreate(BaseModel):
+    period: str = Field(min_length=2, max_length=50)
+    totalIncome: float = Field(ge=0)
+    totalExpenses: float = Field(ge=0)
+    savings: float
+    categoryHighlights: Optional[list[str]] = Field(default=None, max_length=10)
+    goalProgressHighlights: Optional[list[str]] = Field(default=None, max_length=10)
+    debtHighlights: Optional[list[str]] = Field(default=None, max_length=10)
+    story: Optional[str] = Field(default=None, max_length=1500)
+
+
+class GoalConflictCreate(BaseModel):
+    monthlyIncome: float = Field(ge=0)
+    monthlyExpenses: float = Field(ge=0)
+    monthlyDebtObligations: float = Field(default=0, ge=0)
+    availableSavingsRate: float = Field(ge=0)
+    aiRecommendedPriority: list[str] = Field(min_length=1, max_length=20)
+    userPriorityOverride: Optional[list[str]] = Field(default=None, max_length=20)
+    impactSummary: Optional[str] = Field(default=None, max_length=1000)
